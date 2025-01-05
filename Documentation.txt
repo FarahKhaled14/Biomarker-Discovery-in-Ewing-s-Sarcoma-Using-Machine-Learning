@@ -1,0 +1,56 @@
+Project Architecture:
+- Data Loading and Preprocessing:
+  - Protein expression data is loaded from the research paper’s dataset.
+  - Missing values are handled by column-wise mean imputation.
+  - Features with more than 40% missing values are dropped.
+  - Normalization is performed:
+    - Row-wise normalization: Each row is divided by its median.
+    - Column-wise Z-score normalization: Features are standardized across samples.
+  
+- Feature Selection:
+  - MRMR (Minimum Redundancy Maximum Relevance) is used to select features based on relevance to the target and redundancy minimization.
+  - RFE (Recursive Feature Elimination) selects features recursively using a Random Forest Classifier.
+  - The final feature set is determined by the intersection of MRMR, RFE, and DEPs (Differentially Expressed Proteins) identified in the reference paper.
+
+- Cross-Validation:
+  - Stratified 5-Fold Cross-Validation is used to split the data into balanced training and testing sets.
+
+- SMOTE (Synthetic Minority Oversampling Technique):
+  - Synthetic samples are generated for the minority class in the training set to address class imbalance.
+
+- Model Training and Evaluation:
+  - Two machine learning models, SVM (Support Vector Machine) and Random Forest, are trained and evaluated.
+  - Hyperparameter tuning is performed using GridSearchCV.
+  - Evaluation metrics include Accuracy and ROC AUC.
+  - ROC Curves are visualized for each cross-validation fold.
+
+- Result Aggregation:
+  - Common features across all folds are identified and reported.
+  - Mean accuracy and ROC AUC are calculated for each model.
+
+Design Decisions:
+- Data Preprocessing:
+  - Drop features with missing values in more than 40% of the samples.
+  - Impute missing values using the column mean.
+  - Apply row-wise median normalization and column-wise Z-score normalization.
+
+- Feature Selection:
+  - Select 25 features using MRMR and RFE methods independently.
+  - Include features that intersect with DEPs from the reference paper to enhance biological relevance.
+
+- Cross-Validation:
+  - Use Stratified 5-Fold Cross-Validation to maintain balanced classes in training and testing sets.
+
+- Model Evaluation:
+  - Evaluate models based on Accuracy and ROC AUC.
+  - Use the cumulative intersection of selected features across folds to identify consistent biomarkers.
+
+Algorithms Used:
+- MRMR (Minimum Redundancy Maximum Relevance):
+  - Selects features based on relevance to the target and minimizes redundancy among features.
+- Recursive Feature Elimination (RFE):
+  - Recursively eliminates features based on their contribution to the model’s performance.
+- Support Vector Machine (SVM):
+  - Used with both linear and RBF kernels for classification.
+- Random Forest Classifier:
+  - Used for classification and feature importance calculation.
