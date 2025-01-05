@@ -14,14 +14,14 @@ This project aims to enhance biomarker detection by comparing the effectiveness 
 - Install the required dependencies in requirements.txt.
 
 # Usage
--Preprocessing: The script preprocesses the protein expression data by:
+- Preprocessing: The script preprocesses the protein expression data by:
   Filtering features with more than 40% missing values.
   Imputing missing values using the mean.
   Normalizing the data row-wise by the median and column-wise using Z-score normalization.
--Feature Selection:
+- Feature Selection:
   MRMR: Selects features based on relevance and redundancy minimization.
   RFE: Recursively eliminates features based on a machine learning model's performance.
--Model Training and Evaluation:
+- Model Training and Evaluation:
   Applies SVM and Random Forest with hyperparameter optimization using GridSearchCV.
   Evaluates models with metrics such as Accuracy and ROC AUC.
 
